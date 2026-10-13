@@ -51,7 +51,25 @@ def parse_gcloud_config(raw: str) -> dict:
     # TODO: parse `raw` as JSON and return {"account": ..., "project": ...}
     #       from the "core" section. Return empty strings if raw is empty or a
     #       field is missing.
-    raise NotImplementedError("Phase 0: implement parse_gcloud_config()")
+    # If the input is completely empty, return the empty dictionary right away
+    if not raw:
+        return {"account": "", "project": ""}
+    
+    try:
+        # Convert the JSON string to a dictionary
+        data = json.loads(raw)
+        
+        # Grab the "core" section, defaulting to an empty dict if it's missing
+        core = data.get("core", {})
+        
+        # Return the specific format requested, using "" if fields are missing
+        return {
+            "account": core.get("account") or "",
+            "project": core.get("project") or ""
+        }
+    except Exception:
+        # If the JSON parsing fails for any reason, return the empty defaults
+        return {"account": "", "project": ""}
 
 
 def parse_repo_slug(remote_url: str) -> str:
@@ -69,7 +87,23 @@ def parse_repo_slug(remote_url: str) -> str:
     """
     # TODO: return "owner/repo" for both the HTTPS and SSH forms shown above.
     #       Strip any trailing ".git". Return "" if not a github.com URL.
-    raise NotImplementedError("Phase 0: implement parse_repo_slug()")
+    # Check if it's empty or not a github url
+    if not remote_url or "github.com" not in remote_url:
+        return ""
+        
+    # Strip off the ".git" at the end if it exists
+    if remote_url.endswith(".git"):
+        remote_url = remote_url[:-4]
+        
+    # Extract the owner/repo part depending on if it is SSH or HTTPS
+    if remote_url.startswith("git@github.com:"):
+        # Splits on the colon and takes everything after it
+        return remote_url.split("git@github.com:")[1]
+    elif "github.com/" in remote_url:
+        # Splits on the slash after github.com and takes everything after
+        return remote_url.split("github.com/")[1]
+        
+    return ""
 
 
 # --------------------------------------------------------------------------- #
