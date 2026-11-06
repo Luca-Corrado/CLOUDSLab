@@ -1,0 +1,30 @@
+{
+  "phase": "2",
+  "environment": {
+    "colab": true
+  },
+  "attention": {
+    "naive_ms": 355.54,
+    "vectorized_ms": 11.985,
+    "speedup": 29.67
+  },
+  "threads": {
+    "1": 2250.701,
+    "2": 2022.36,
+    "4": 2523.956,
+    "8": 2447.428
+  },
+  "devices": {
+    "cpu_ms": 464054.3,
+    "gpu_ms": 13121.3
+  },
+  "training": {
+    "steps": 2000,
+    "final_loss": 1.5001,
+    "param_count": 4935680
+  },
+  "sample": "\n\nOFORIABELLAND:\nNo, lay of Lord Aplay:\nI hum good make my at to thy ipany seast?\n\nHENRY BOLINGBROKE:\nFor Tratorfurio, Richard?\n\nGRUMIO:\nGood threm togerne, if: slandly, he die; thou sap!\n\nGREMIO:\nName",
+  "model": {
+    "gcs_url": "https://storage.googleapis.com/cloudslab-511508-eurecomgpt/model.safetensors"
+  }
+}
